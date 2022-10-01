@@ -1,0 +1,25 @@
+<ion-card *ngIf="task" class="ion-margin">
+    <ion-card-header>
+        <ion-card-subtitle [style.color]="task.priority === 'high'? 'red' : (task.priority === 'low')?'green':'orange'">
+            {{task.category}}
+        </ion-card-subtitle>
+        <ion-item [routerLink]=" '/task/' + task.id " [detail]="false ">
+            <ion-icon [color]="task.priority === 'high'? 'danger' : (task.priority === 'low')?'success':'warning'" name="ellipse"></ion-icon>
+            <ion-label>{{task.title}}</ion-label>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-label *ngIf="task.dueDate">Due {{task.dueDate | date:'fullDate'}}</ion-label>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+            <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-col>
+        <ion-col>
+            <ion-icon (click)="updateTask(task)" name="create-outline"></ion-icon>
+        </ion-col>
+        <ion-col>
+            <ion-icon (click)="deleteTask(task.id)" name="trash-outline"></ion-icon>
+        </ion-col>
+    </ion-row>
+</ion-card>

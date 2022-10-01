@@ -6,14 +6,30 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
+  // {
+  //   path: 'task/:id',
+  //   loadChildren: () => import('./view-message/view-message.module').then( m => m.ViewMessagePageModule)
+  // },
   {
-    path: 'message/:id',
-    loadChildren: () => import('./view-message/view-message.module').then( m => m.ViewMessagePageModule)
+    path: 'task/:id',
+    loadChildren: () => import('./view-task/view-task.module').then( m => m.ViewTaskPageModule)
   },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'view-task',
+    loadChildren: () => import('./view-task/view-task.module').then( m => m.ViewTaskPageModule)
+  },
+  {
+    path: 'create-new-task',
+    loadChildren: () => import('./create-new-task/create-new-task.module').then( m => m.CreateNewTaskPageModule)
+  },
+  {
+    path: 'update-task',
+    loadChildren: () => import('./update-task/update-task.module').then( m => m.UpdateTaskPageModule)
   },
 ];
 

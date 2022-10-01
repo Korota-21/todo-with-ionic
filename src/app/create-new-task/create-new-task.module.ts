@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ViewMessagePage } from './view-message.page';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ViewMessagePageRoutingModule } from './view-message-routing.module';
+import { CreateNewTaskPageRoutingModule } from './create-new-task-routing.module';
+
+import { CreateNewTaskPage } from './create-new-task.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewMessagePageRoutingModule
+    CreateNewTaskPageRoutingModule
   ],
-  declarations: [ViewMessagePage]
+  declarations: [CreateNewTaskPage]
 })
-export class ViewMessagePageModule {}
+export class CreateNewTaskPageModule {}
