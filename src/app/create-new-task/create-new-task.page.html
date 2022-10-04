@@ -44,7 +44,7 @@
             <span>{{selectedCategory}}</span>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!parentTask">
             <ion-chip *ngFor="let tag of categories; let i = index" color="secondary" outline="true" (click)="selectCategory(i)">
                 <ion-label color="secondary">{{tag}}</ion-label>
             </ion-chip>

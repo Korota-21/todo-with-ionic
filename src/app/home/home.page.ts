@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DataService, Task } from '../services/data.service';
+import { DataService } from '../services/data.service';
+import { Task } from '../interfaces/Task';
 import { CreateNewTaskPage } from '../create-new-task/create-new-task.page';
 import { Subscription } from 'rxjs';
-import { UpdateTaskPage } from '../update-task/update-task.page';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -11,7 +11,7 @@ import { UpdateTaskPage } from '../update-task/update-task.page';
 })
 export class HomePage implements OnDestroy {
   today: Date;
-  taskList: Task[];
+  taskList: Task[]=[];
   subscribtion!: Subscription;
 
   constructor(private data: DataService, public modalCtlr: ModalController) {
@@ -41,8 +41,9 @@ export class HomePage implements OnDestroy {
 
 
   setTaskSubscriotion() {
-    this.subscribtion = this.data.tasksChange.subscribe((tasks) =>
-      this.taskList = tasks
+    this.subscribtion = this.data.tasksChange.subscribe((tasks: Array<Task>) => {
+      this.taskList = this.data.tasks.filter(task=>task.parentTaskId ==null);
+    }
     );
   }
   ngOnDestroy(): void {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DataService, Task } from '../services/data.service';
+import { DataService } from '../services/data.service';
+import { Task } from '../interfaces/Task';
 import { UpdateTaskPage } from '../update-task/update-task.page';
 
 @Component({
@@ -9,7 +10,6 @@ import { UpdateTaskPage } from '../update-task/update-task.page';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
-
   @Input() task: Task;
 
   constructor(private data: DataService,public modalCtlr: ModalController) { }
@@ -32,6 +32,7 @@ export class TaskComponent implements OnInit {
 
     return await modal.present();
   }
+
   deleteTask(key: string) {
     this.data.deleteTask(key);
   }
