@@ -7,9 +7,9 @@
 </ion-header>
 <ion-content *ngIf="task">
     <app-task [task]="task"></app-task>
-    <ion-card>
+    <div class="ion-margin">
         <app-task *ngFor="let task of taskChildren;" [task]="task"></app-task>
-    </ion-card>
+    </div>
     <!-- fab placed to the bottom end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addChildTask(task)">

@@ -18,8 +18,6 @@ export class ViewTaskComponent implements OnInit {
 
   constructor(private data: DataService, private modalCtlr: ModalController,
     private activatedRoute: ActivatedRoute) {
-    this.setTaskSubscriotion();
-
   }
 
   ngOnInit() {
@@ -28,7 +26,7 @@ export class ViewTaskComponent implements OnInit {
   async getTaskAndItsChildren() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     this.task = await this.data.getTaskId(id);
-    this.setTaskSubscriotion();
+    this.setTaskSubscriotion(id);
   }
 
   async addChildTask(currentTask: Task) {
@@ -44,9 +42,9 @@ export class ViewTaskComponent implements OnInit {
     return await modal.present();
   }
 
-  setTaskSubscriotion() {
+  setTaskSubscriotion(id: string) {
     this.subscribtion = this.data.tasksChange.subscribe((tasks: Array<Task>) => {
-      this.taskChildren = this.data.tasks.filter(task => task.parentTaskId === this.task.id);
+      this.taskChildren = this.data.tasks.filter(task => task.parentTaskId === id);
     }
     );
   }
