@@ -13,7 +13,9 @@
     </ion-card-content>
     <ion-row>
         <ion-col>
-            <ion-icon (click)="done()" name="checkmark-outline"></ion-icon>
+
+            <ion-icon *ngIf="task.state !=='done'" (click)="done(true)" name="square-outline"></ion-icon>
+            <ion-icon *ngIf="task.state ==='done'" (click)="done(false)" name="checkbox-outline"></ion-icon>
         </ion-col>
         <ion-col>
             <ion-icon (click)="updateTask(task)" name="create-outline"></ion-icon>

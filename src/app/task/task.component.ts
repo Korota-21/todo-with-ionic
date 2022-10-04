@@ -32,8 +32,13 @@ export class TaskComponent implements OnInit {
 
     return await modal.present();
   }
-  async done() {
-    this.task.state = 'done';
+  async done(state: boolean) {
+    if(state){
+      this.task.state = 'done';
+    }else{
+      this.task.state = 'current';
+
+    }
     await this.data.addTask(this.task);
     this.data.getTasksFromStorage();
   }

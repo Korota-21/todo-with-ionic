@@ -8,13 +8,20 @@
         </ion-item>
     </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
+    <ion-segment #segment value="noChildren">
+        <ion-segment-button value="noChildren">
+            <ion-label>Default</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="all">
+            <ion-label>All</ion-label>
+        </ion-segment-button>
 
-    <app-task *ngFor="let task of taskList;" [task]="task"></app-task>
+        <ion-segment-button value="done">
+            <ion-label>done</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <app-task *ngFor="let task of getTasksList(segment.value);" [task]="task"></app-task>
     <!-- fab placed to the bottom end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addNewTask()">
@@ -22,5 +29,8 @@
         </ion-fab-button>
     </ion-fab>
 
-
+    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+        <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
 </ion-content>
