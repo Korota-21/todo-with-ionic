@@ -44,8 +44,11 @@ export class ViewTaskComponent implements OnInit {
 
   setTaskSubscriotion(id: string) {
     this.subscribtion = this.data.tasksChange.subscribe((tasks: Array<Task>) => {
-      this.taskChildren = this.data.tasks.filter(task => task.parentTaskId === id);
-    }
-    );
+      this.taskChildren = this.data.tasks.filter(task => {
+        if ((task.parentTaskId === id) && (task.state !== 'done')) {
+          return task;
+        }
+      });
+    });
   }
 }

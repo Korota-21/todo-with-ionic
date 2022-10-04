@@ -12,7 +12,7 @@ import { UpdateTaskPage } from '../update-task/update-task.page';
 export class TaskComponent implements OnInit {
   @Input() task: Task;
 
-  constructor(private data: DataService,public modalCtlr: ModalController) { }
+  constructor(private data: DataService, public modalCtlr: ModalController) { }
 
   ngOnInit() { }
 
@@ -20,19 +20,23 @@ export class TaskComponent implements OnInit {
     const win = window as any;
     return win && win.Ionic && win.Ionic.mode === 'ios';
   }
-  async updateTask(selectedTask: Task){
+  async updateTask(selectedTask: Task) {
     const modal = await this.modalCtlr.create({
       component: UpdateTaskPage,
-      componentProps: {task: selectedTask}
+      componentProps: { task: selectedTask }
     });
 
-    modal.onDidDismiss().then(()=>{
+    modal.onDidDismiss().then(() => {
       this.data.getTasksFromStorage();
     });
 
     return await modal.present();
   }
-
+  async done() {
+    this.task.state = 'done';
+    await this.data.addTask(this.task);
+    this.data.getTasksFromStorage();
+  }
   deleteTask(key: string) {
     this.data.deleteTask(key);
   }

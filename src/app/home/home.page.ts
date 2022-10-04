@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class HomePage implements OnDestroy {
   today: Date;
-  taskList: Task[]=[];
+  taskList: Task[] = [];
   subscribtion!: Subscription;
 
   constructor(private data: DataService, public modalCtlr: ModalController) {
@@ -42,7 +42,11 @@ export class HomePage implements OnDestroy {
 
   setTaskSubscriotion() {
     this.subscribtion = this.data.tasksChange.subscribe((tasks: Array<Task>) => {
-      this.taskList = this.data.tasks.filter(task=>task.parentTaskId ==null);
+      this.taskList = this.data.tasks.filter(task => {
+        if ((task.parentTaskId === null) && (task.state !== 'done')) {
+          return task;
+        }
+      });
     }
     );
   }
