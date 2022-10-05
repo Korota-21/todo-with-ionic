@@ -46,6 +46,5 @@ export class DataService {
     const storage = await this.storage.create();
     this._storage = storage;
     this.getTasksFromStorage();
-
   }
 }

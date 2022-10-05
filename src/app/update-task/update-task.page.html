@@ -32,7 +32,7 @@
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
                 <ng-template>
-                    <ion-datetime [(ngModel)]="task.dueDate" id="datetime" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"></ion-datetime>
+                    <ion-datetime max="2042-05-31T23:59:59" [(ngModel)]="task.dueDate" id="datetime" presentation="date" [preferWheel]="true" [showDefaultButtons]="true"></ion-datetime>
                 </ng-template>
             </ion-modal>
         </ion-item>

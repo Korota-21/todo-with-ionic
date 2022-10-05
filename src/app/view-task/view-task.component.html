@@ -1,15 +1,16 @@
 <ion-header [translucent]="true">
-    <ion-toolbar>
+    <ion-toolbar *ngIf="task">
         <ion-buttons slot="start">
-            <ion-back-button *ngIf="task" [text]="task.title" defaultHref="/"></ion-back-button>
+            <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
+        <ion-title>{{task.title}}</ion-title>
+        <ion-label [style.color]="'gray'" class="size-small ion-text-wrap ion-padding-horizontal">{{task.description}}</ion-label>
+
     </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="task">
-    <app-task [task]="task"></app-task>
-    <div class="ion-margin">
-        <app-task *ngFor="let task of taskChildren;" [task]="task"></app-task>
-    </div>
+    <!-- <app-task [task]="task"></app-task> -->
+    <app-task *ngFor="let task of taskChildren;" [task]="task"></app-task>
     <!-- fab placed to the bottom end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addChildTask(task)">
