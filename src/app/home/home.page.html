@@ -8,20 +8,20 @@
         </ion-item>
     </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
-    <ion-segment #segment value="noChildren">
-        <ion-segment-button value="noChildren">
-            <ion-label>Default</ion-label>
+<ion-content #content [fullscreen]="true">
+    <ion-segment #segment [value]="0">
+        <ion-segment-button *ngFor="let title of segmentTitles; let i = index" [value]="i">
+            <ion-label>{{title}}</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="all">
+        <!-- <ion-segment-button value="all">
             <ion-label>All</ion-label>
         </ion-segment-button>
 
         <ion-segment-button value="done">
             <ion-label>done</ion-label>
-        </ion-segment-button>
+        </ion-segment-button> -->
     </ion-segment>
-    <app-task *ngFor="let task of getTasksList(segment.value);" [task]="task"></app-task>
+    <app-task *ngFor="let task of getTasksList($any(segmentTitles[segment.value]));" [task]="task"></app-task>
     <!-- fab placed to the bottom end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="addNewTask()">
