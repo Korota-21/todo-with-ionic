@@ -13,13 +13,6 @@
         <ion-segment-button *ngFor="let title of segmentTitles; let i = index" [value]="i">
             <ion-label>{{title}}</ion-label>
         </ion-segment-button>
-        <!-- <ion-segment-button value="all">
-            <ion-label>All</ion-label>
-        </ion-segment-button>
-
-        <ion-segment-button value="done">
-            <ion-label>done</ion-label>
-        </ion-segment-button> -->
     </ion-segment>
     <app-task *ngFor="let task of getTasksList($any(segmentTitles[segment.value]));" [task]="task"></app-task>
     <!-- fab placed to the bottom end -->

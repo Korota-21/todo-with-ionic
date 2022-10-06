@@ -31,11 +31,12 @@ export class HomePage implements OnDestroy, OnInit {
       onEnd: (detail) => {
         let currentSeg = +this.segment.value;
         const moveDistance = detail.startX - detail.currentX;
-        if (moveDistance < -150) {
+        const reqDistanceToMove = 50;
+        if (moveDistance < -reqDistanceToMove) {
           if (currentSeg > 0) {
             currentSeg--;
           }
-        } else if (moveDistance > 150) {
+        } else if (moveDistance > reqDistanceToMove) {
           if (currentSeg < this.segmentTitles.length-1) {
             currentSeg++;
           }
