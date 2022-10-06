@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GestureController, IonContent, IonSegment, ModalController } from '@ionic/angular';
 import { DataService } from '../services/data.service';
 import { Task } from '../interfaces/Task';
 import { CreateNewTaskPage } from '../create-new-task/create-new-task.page';
@@ -10,17 +10,42 @@ import { Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy, OnInit {
+  @ViewChild('content', { read: ElementRef, static: true }) content: ElementRef;
+  @ViewChild('segment') segment: IonSegment;
+  segmentTitles = ['default', 'all', 'done'];
   today: Date;
   taskList: Task[] = [];
   subscribtion!: Subscription;
-
-  constructor(private data: DataService, public modalCtlr: ModalController, private router: Router) {
+  constructor(private data: DataService, public modalCtlr: ModalController, private router: Router
+    , private gestureCtrl: GestureController) {
     this.today = new Date();
     this.setTaskSubscriotion();
   }
-
-
+  ngOnInit(): void {
+    const gesture = this.gestureCtrl.create({
+      el: this.content.nativeElement,
+      gesturePriority: 100,
+      threshold: 5,
+      passive: false,
+      onEnd: (detail) => {
+        let currentSeg = +this.segment.value;
+        const moveDistance = detail.startX - detail.currentX;
+        if (moveDistance < -150) {
+          if (currentSeg > 0) {
+            currentSeg--;
+          }
+        } else if (moveDistance > 150) {
+          if (currentSeg < this.segmentTitles.length-1) {
+            currentSeg++;
+          }
+        }
+        this.segment.value=  currentSeg.toString();
+      },
+      gestureName: 'test-gesture'
+    });
+    gesture.enable();
+  }
   refresh(event) {
     event.target.complete();
     this.router.navigate([this.router.url]);
@@ -43,8 +68,8 @@ export class HomePage implements OnDestroy {
     }
     );
   }
-  getTasksList(filter: 'done' | 'all' | 'noChildren'): Task[]{
-    if (filter === 'noChildren') {
+  getTasksList(filter: 'done' | 'all' | 'default'): Task[] {
+    if (filter === 'default') {
       return this.taskList.filter(task => {
         if ((task.parentTaskId === null) && (task.state !== 'done')) {
           return task;
@@ -53,7 +78,7 @@ export class HomePage implements OnDestroy {
     }
     else if (filter === 'all') {
       return this.taskList;
-    }else if (filter === 'done') {
+    } else if (filter === 'done') {
       return this.taskList.filter(task => {
         if ((task.parentTaskId === null) && (task.state === 'done')) {
           return task;
@@ -63,5 +88,8 @@ export class HomePage implements OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscribtion.unsubscribe();
+  }
+  private onEnd(detail){
+
   }
 }
