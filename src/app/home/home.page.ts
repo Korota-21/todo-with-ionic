@@ -37,11 +37,11 @@ export class HomePage implements OnDestroy, OnInit {
             currentSeg--;
           }
         } else if (moveDistance > reqDistanceToMove) {
-          if (currentSeg < this.segmentTitles.length-1) {
+          if (currentSeg < this.segmentTitles.length - 1) {
             currentSeg++;
           }
         }
-        this.segment.value=  currentSeg.toString();
+        this.segment.value = currentSeg.toString();
       },
       gestureName: 'test-gesture'
     });
@@ -81,7 +81,7 @@ export class HomePage implements OnDestroy, OnInit {
       return this.taskList;
     } else if (filter === 'done') {
       return this.taskList.filter(task => {
-        if ((task.parentTaskId === null) && (task.state === 'done')) {
+        if (task.state === 'done') {
           return task;
         }
       });
@@ -90,7 +90,7 @@ export class HomePage implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.subscribtion.unsubscribe();
   }
-  private onEnd(detail){
+  private onEnd(detail) {
 
   }
 }
